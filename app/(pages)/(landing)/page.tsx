@@ -1,8 +1,9 @@
 "use client"; // This directive enables client-side rendering for this component
 
 import { useEffect, useState } from 'react';
+import TVShowCard from '../../card';
 
-interface TV {
+export interface TVShow {
   id: number;
   name: string;
   overview: string;
@@ -13,8 +14,8 @@ interface TV {
 }
 
 const Home: React.FC = () => {
-  const [tvs, setTvs] = useState<TV[]>([]);
-
+  const [tvs, setTvs] = useState<TVShow[]>([]);
+  const [theshow, setShow] = useState(null);
   useEffect(() => {
     fetch('/api/tv/trending')
       .then(response => response.json())
@@ -22,6 +23,7 @@ const Home: React.FC = () => {
         // Assuming data is an object with a 'results' key containing the array of TV shows
         if (data.results) {
           setTvs(data.results);
+          setShow(data.results[0]);
         } else {
           console.error('Error: Invalid data format from API');
         }
@@ -32,10 +34,14 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Popular TV Shows</h1>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', textAlign:"center",}}>
-        {tvs.map(tv => (
+    <div><h1>Popular TV Shows</h1>
+      {/* 
+      {theshow&&<TVShowCard show={theshow} />}
+      <button className="bg-primary text-text font-primary py-2 px-4 rounded hover:bg-secondary transition-colors">
+      {"Hello"}
+    </button> */}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', textAlign: "center", }}>
+        {/* {tvs.map(tv => (
           <div key={tv.id} style={{ width: '200px' }}>
             <img
               src={`https://image.tmdb.org/t/p/w500${tv.poster_path}`}
@@ -43,13 +49,11 @@ const Home: React.FC = () => {
               style={{ width: '100%' }}
             />
             <h3>{tv.name}</h3>
-            {/* <p>Release Date: {new Date(tv.first_air_date).toDateString()}</p>
-            <p>Rating: {tv.vote_average}</p> */}
             {tv.genre_names.map(genre => (
-              <div style={{backgroundColor:"darkRed", borderRadius:"4px",}}>{genre}</div>
+              <div className="bg-primary">{genre}</div>
             ))}
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   );
