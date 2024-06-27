@@ -72,7 +72,7 @@ def create_matchups(round_number=1):
     global tvs_df, matchups_df
     # Get list of show IDs
     show_ids = tvs_df['show_id'].tolist()
-    
+    matchups_df = pd.DataFrame(columns=['match_id', 'round_number', 'show1_id', 'show1_name','show1_poster_path','show2_id', 'show2_name','show2_poster_path', 'winner_id'])
     # Generate matchups
     matchups = []
     for i in range(0, len(show_ids), 2):
