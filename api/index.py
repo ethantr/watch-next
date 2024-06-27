@@ -1,4 +1,5 @@
 import os
+import random
 from flask import Flask, jsonify, request
 import requests
 from dotenv import load_dotenv
@@ -45,6 +46,18 @@ def fetch_trending_tv_shows():
 tvs_df = pd.DataFrame(columns=['name',"show_id","poster_path"])
 matchups_df = pd.DataFrame(columns=['match_id', 'round_number', 'show1_id', 'show1_name','show1_poster_path','show2_id', 'show2_name','show2_poster_path', 'winner_id'])
 
+def previous_power_of_2(n):
+    if n <= 0:
+        return 0
+    return 1 << (n - 1).bit_length() - 1
+
+
+def remove_show():
+    # Remove a show (e.g., with the lowest impact) until the number of shows is a power of 2
+    global tvs_df 
+    if len(tvs_df ) > 1:
+        tvs_df  = tvs_df[:-1]
+
 @app.route('/api/tv/trending/initialise', methods=['POST'])
 def initialize_tournament():
     global tvs_df, matchups_df
@@ -62,6 +75,16 @@ def initialize_tournament():
     # Initialize movies DataFrame
     tvs_df = pd.DataFrame({'name': tv_shows_names,"show_id":tv_show_ids,"poster_path":tv_show_images})
     
+     # Reduce the number of shows to the previous power of 2
+    num_shows = len(tvs_df)
+    previous_power = previous_power_of_2(num_shows)
+    
+    if previous_power < num_shows:
+        tvs_df = tvs_df.head(previous_power)
+    app.logger.info({"total_shows":num_shows,"last_power":previous_power})
+    
+
+
     # Create initial matchups
     create_matchups()
     app.logger.info(tvs_df)
@@ -72,6 +95,7 @@ def create_matchups(round_number=1):
     global tvs_df, matchups_df
     # Get list of show IDs
     show_ids = tvs_df['show_id'].tolist()
+    random.shuffle(show_ids)
     matchups_df = pd.DataFrame(columns=['match_id', 'round_number', 'show1_id', 'show1_name','show1_poster_path','show2_id', 'show2_name','show2_poster_path', 'winner_id'])
     # Generate matchups
     matchups = []
