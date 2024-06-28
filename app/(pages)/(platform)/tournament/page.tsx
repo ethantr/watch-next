@@ -3,6 +3,8 @@ import React from "react";
 import useMatchups from "@/app/hooks/use_matchups";
 import MatchupCard from "./matchup_card";
 import Loading from "@/app/components/loading";
+import MovieSearch from "./choose_tv_shows";
+import TVSearch from "./choose_tv_shows";
 
 export default function Home() {
   const {
@@ -13,7 +15,12 @@ export default function Home() {
     handleWinnerSelect,
     currentMatchup,
     loading,
-  } = useMatchups()
+  } = useMatchups();
+
+  const search = true;
+  if (search) {
+    return <TVSearch onTv_showsSelected={(query) => {console.warn(query)}}></TVSearch>;
+  }
 
   if (matchups.length === 0) {
     return (
@@ -40,21 +47,36 @@ export default function Home() {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100vh' }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
       <h1>Movie Tournament</h1>
       <button onClick={initialise}>Restart</button>
       <h2>
         Round {currentRound} Matchup {currentMatchup.match_id}
       </h2>
-      <div className="p-4" style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <div
+        className="p-4"
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
         <section
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             flexWrap: "wrap",
-            height: '100%',
-            overflowY: 'auto',
+            height: "100%",
+            overflowY: "auto",
           }}
         >
           <MatchupCard

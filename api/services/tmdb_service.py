@@ -16,3 +16,17 @@ def fetch_trending_tv_shows():
     else:
         print(f"Failed to fetch data. Status code: {response.status_code}")
         return None
+
+def search_movie_by_name(query):
+    url = f"https://api.themoviedb.org/3/search/movie?api_key={Config.TMDB_API_KEY}&query={query}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json().get('results', [])
+    return []
+
+def search_tv_show_by_name(query):
+    url = f"https://api.themoviedb.org/3/search/tv?api_key={Config.TMDB_API_KEY}&query={query}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json().get('results', [])
+    return []

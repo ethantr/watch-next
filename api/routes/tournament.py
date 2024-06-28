@@ -1,6 +1,6 @@
 # routes/tournament.py
 from flask import Blueprint, jsonify, request
-from services.tmdb_service import fetch_trending_tv_shows
+from services.tmdb_service import fetch_trending_tv_shows, search_movie_by_name, search_tv_show_by_name
 from services.tournament_service import initialize_tournament, create_matchups, set_winner, check_and_create_next_round
 from data_store import data_store
 import pandas as pd
@@ -27,6 +27,26 @@ def initialize():
     initialize_tournament(tv_shows)
     print(data_store.matchups_df)
     return jsonify(data_store.matchups_df.to_dict()), 201
+
+
+@tournament_bp.route('/tournament/search_movie', methods=['GET'])
+def search_movie():
+    query = request.args.get('query', '')
+    if not query:
+        return jsonify({"error": "Query parameter is required"}), 400
+
+    movies = search_movie_by_name(query)
+    return jsonify(movies), 200
+
+@tournament_bp.route('/tournament/search_tv_show', methods=['GET'])
+def search_tv_show():
+    query = request.args.get('query', '')
+    if not query:
+        return jsonify({"error": "Query parameter is required"}), 400
+
+    shows = search_tv_show_by_name(query)
+    return jsonify(shows), 200
+
 
 @tournament_bp.route('/tournament/matchups', methods=['GET'])
 def get_matchups():
