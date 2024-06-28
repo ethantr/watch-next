@@ -1,5 +1,5 @@
 // hooks/useMatchups.ts
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 interface Matchup {
   match_id: number;
@@ -16,41 +16,44 @@ interface Matchup {
 const useMatchups = () => {
   const [matchups, setMatchups] = useState<Matchup[]>([]);
   const [currentRound, setCurrentRound] = useState<number>(1);
-  const [currentMatchupIndex, setCurrentMatchupIndex] = useState<number>(0);
+  const [currentMatchupIndex, setCurrentMatchupIndex] = useState<number>(1);
 
   const initialise = () => {
-    fetch('/api/tv/trending/initialise', {
-      method: 'POST',
+    fetch("/api/tv/tournament/initialise", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
-      .catch((error) => console.error('Error initializing matchups:', error));
-    setCurrentRound(1)
-    setCurrentMatchupIndex(0);
+      .then((response) => {
+        response.json();
+        console.log("getting the matchups")
+        setCurrentRound(1)
+        fetchRound(1)
+      })
+      .catch((error) => console.error("Error initializing matchups:", error));
   };
 
   useEffect(() => {
-    fetchRound();
+    fetchRound(currentRound);
   }, [currentRound]);
 
-  const fetchRound = () => {
-    fetch(`/api/tv/trending/matchups?round=${currentRound}`)
+  const fetchRound = (round:number) => {
+    fetch(`/api/tv/tournament/matchups?round=${round}`)
       .then((response) => response.json())
       .then((data) => {
         setMatchups(data);
         setCurrentMatchupIndex(0); // Reset to the first matchup of the new round
       })
-      .catch((error) => console.error('Error fetching matchups:', error));
+      .catch((error) => console.error("Error fetching matchups:", error));
   };
 
   const handleWinnerSelect = (winnerId: number | null) => {
     const currentMatchup = matchups[currentMatchupIndex];
-    fetch('/api/tv/trending/winner', {
-      method: 'POST',
+    fetch("/api/tv/tournament/winner", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         matchup_id: currentMatchup.match_id,
@@ -75,14 +78,16 @@ const useMatchups = () => {
         if (currentMatchupIndex < matchups.length - 1) {
           setCurrentMatchupIndex(currentMatchupIndex + 1);
         } else {
-          const allResolved = updatedMatchups.every((m) => m.winner_id !== null);
+          const allResolved = updatedMatchups.every(
+            (m) => m.winner_id !== null
+          );
           if (allResolved) {
             setCurrentRound(currentRound + 1);
           }
         }
       })
       .catch((error) => {
-        console.error('Error setting winner:', error);
+        console.error("Error setting winner:", error);
       });
   };
 

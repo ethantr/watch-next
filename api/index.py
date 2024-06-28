@@ -80,6 +80,7 @@ def initialize_tournament():
     previous_power = previous_power_of_2(num_shows)
     
     if previous_power < num_shows:
+        app.logger.warn("Reducing number of shows to make fair match")
         tvs_df = tvs_df.head(previous_power)
     app.logger.info({"total_shows":num_shows,"last_power":previous_power})
     
@@ -87,7 +88,6 @@ def initialize_tournament():
 
     # Create initial matchups
     create_matchups()
-    app.logger.info(tvs_df)
     result = matchups_df.to_dict()
     return jsonify(result), 201
 
@@ -117,7 +117,6 @@ def create_matchups(round_number=1):
     # Append matchups to matchups_df
     new_matchups_df = pd.DataFrame(matchups)
     matchups_df = pd.concat([matchups_df, new_matchups_df], ignore_index=False)
-    app.logger.info(matchups_df)
 
 @app.route('/api/tv/trending/matchups', methods=['GET'])
 def get_matchups():
@@ -163,7 +162,6 @@ def set_winner():
     # Check and create the next round if all matchups in this round are completed
     matchup = matchups_df[matchups_df['match_id'] == matchup_id].iloc[0]
     check_and_create_next_round(matchup['round_number'])
-    app.logger.info(matchups_df)
     
     return jsonify({"message": "Winner updated", }), 200
 
