@@ -17,6 +17,7 @@ const useMatchups = () => {
   const [matchups, setMatchups] = useState<Matchup[]>([]);
   const [currentRound, setCurrentRound] = useState<number>(1);
   const [currentMatchupIndex, setCurrentMatchupIndex] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const initialise = () => {
     fetch("/api/tv/tournament/initialise", {
@@ -27,9 +28,9 @@ const useMatchups = () => {
     })
       .then((response) => {
         response.json();
-        console.log("getting the matchups")
-        setCurrentRound(1)
-        fetchRound(1)
+        console.log("getting the matchups");
+        setCurrentRound(1);
+        fetchRound(1);
       })
       .catch((error) => console.error("Error initializing matchups:", error));
   };
@@ -38,14 +39,30 @@ const useMatchups = () => {
     fetchRound(currentRound);
   }, [currentRound]);
 
-  const fetchRound = (round:number) => {
+  const fetchRound = (round: number) => {
+    setLoading(true);
     fetch(`/api/tv/tournament/matchups?round=${round}`)
       .then((response) => response.json())
       .then((data) => {
-        setMatchups(data);
-        setCurrentMatchupIndex(0); // Reset to the first matchup of the new round
+        const preloadImages = data.map((matchup: Matchup) => {
+          const show1Image = new Image();
+          show1Image.src = `https://image.tmdb.org/t/p/w500${matchup.show1_poster_path}`;
+          if (matchup.show2_poster_path) {
+            const show2Image = new Image();
+            show2Image.src = `https://image.tmdb.org/t/p/w500${matchup.show2_poster_path}`;
+          }
+        });
+
+        Promise.all(preloadImages).then(() => {
+          setMatchups(data);
+          setCurrentMatchupIndex(0); // Reset to the first matchup of the new round
+          setLoading(false);
+        });
       })
-      .catch((error) => console.error("Error fetching matchups:", error));
+      .catch((error) => {
+        console.error("Error fetching matchups:", error);
+        setLoading(false);
+      });
   };
 
   const handleWinnerSelect = (winnerId: number | null) => {
@@ -98,6 +115,7 @@ const useMatchups = () => {
     initialise,
     handleWinnerSelect,
     currentMatchup: matchups[currentMatchupIndex],
+    loading,
   };
 };
 

@@ -1,4 +1,3 @@
-// components/MatchupCard.tsx
 import React from 'react';
 
 interface MatchupCardProps {
@@ -15,14 +14,14 @@ const MatchupCard: React.FC<MatchupCardProps> = ({
   handleWinnerSelect,
 }) => {
   return (
-    <div style={{ textAlign: 'center', margin: '0 20px' }}>
-      <button onClick={() => handleWinnerSelect(showId)}>
+    <div style={{ textAlign: 'center', margin: '0 20px', maxWidth: '45%' }}>
+      <button onClick={() => handleWinnerSelect(showId)} style={{ border: 'none', background: 'none' }}>
         <img
           src={`https://image.tmdb.org/t/p/w500${showPosterPath}`}
           alt={showName}
-          style={{ width: '150px', height: '225px' }}
+          style={{ width: '100%', height: 'auto', maxHeight: '70vh' }}
         />
-        {showName}
+        <div style={{ marginTop: '10px' }}>{showName}</div>
       </button>
     </div>
   );

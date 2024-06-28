@@ -1,4 +1,4 @@
-"use client"; // This directive enables client-side rendering for this component
+"use client";
 import { FC } from 'react';
 import Head from 'next/head';
 import styles from './Home.module.css';
@@ -49,7 +49,7 @@ const Home: FC = () => {
           <p>
             Ready to make your movie night stress-free and enjoyable? Download Movie Matcher now and discover the perfect movie effortlessly!
           </p>
-          <Link href="/swiper">
+          <Link href="/tournament">
           <button className={styles.button}>Start Now</button></Link>
         </section>
       </main>

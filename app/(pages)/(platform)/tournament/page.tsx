@@ -1,9 +1,8 @@
-// pages/index.tsx
 "use client";
-import React from 'react';
-import useMatchups from '@/app/hooks/use_matchups';
-import MatchupCard from './matchup_card';
-import Loading from '@/app/components/loading';
+import React from "react";
+import useMatchups from "@/app/hooks/use_matchups";
+import MatchupCard from "./matchup_card";
+import Loading from "@/app/components/loading";
 
 export default function Home() {
   const {
@@ -13,7 +12,8 @@ export default function Home() {
     initialise,
     handleWinnerSelect,
     currentMatchup,
-  } = useMatchups();
+    loading,
+  } = useMatchups()
 
   if (matchups.length === 0) {
     return (
@@ -40,21 +40,32 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100vh' }}>
       <h1>Movie Tournament</h1>
       <button onClick={initialise}>Restart</button>
       <h2>
-        Round {currentMatchup.round_number} Matchup {currentMatchup.match_id}
+        Round {currentRound} Matchup {currentMatchup.match_id}
       </h2>
-      <div className="p-4">
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div className="p-4" style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <section
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexWrap: "wrap",
+            height: '100%',
+            overflowY: 'auto',
+          }}
+        >
           <MatchupCard
             showId={currentMatchup.show1_id}
             showName={currentMatchup.show1_name}
             showPosterPath={currentMatchup.show1_poster_path}
             handleWinnerSelect={handleWinnerSelect}
           />
-          <div style={{ margin: '0 20px', fontSize: '24px', fontWeight: 'bold' }}>
+          <div
+            style={{ margin: "0 20px", fontSize: "24px", fontWeight: "bold" }}
+          >
             VS
           </div>
           {currentMatchup.show2_id && (
@@ -65,7 +76,7 @@ export default function Home() {
               handleWinnerSelect={handleWinnerSelect}
             />
           )}
-        </div>
+        </section>
       </div>
     </div>
   );
