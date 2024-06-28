@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+// components/TVSearch.tsx
+import React from "react";
+import useSearchTVShows from "@/app/hooks/use_search_tv_shows";
 
 interface Show {
   id: number;
@@ -11,33 +13,17 @@ interface ShowSearchProps {
 }
 
 const TVSearch: React.FC<ShowSearchProps> = ({ onTv_showsSelected }) => {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState<Show[]>([]);
-  const [selectedTv_shows, setSelectedTv_shows] = useState<Show[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  const handleSearch = async () => {
-    setLoading(true);
-    const response = await fetch(
-      `/api/tv/tournament/search_tv_show?query=${query}`
-    );
-    await response.json().then((data) => {
-      setLoading(false);
-      setResults(data);
-    });
-  };
-
-  const handleSelectTv_show = (tv_show: Show) => {
-    setSelectedTv_shows([...selectedTv_shows, tv_show]);
-  };
-
-  const handleDeselectTv_show = (tv_showId: number) => {
-    setSelectedTv_shows(selectedTv_shows.filter((tv_show) => tv_show.id !== tv_showId));
-  };
-
-  const handleSubmit = () => {
-    onTv_showsSelected(selectedTv_shows);
-  };
+  const {
+    query,
+    setQuery,
+    results,
+    loading,
+    selectedTv_shows,
+    handleSearch,
+    handleSelectTv_show,
+    handleDeselectTv_show,
+    handleSubmit,
+  } = useSearchTVShows();
 
   return (
     <div>
@@ -45,7 +31,7 @@ const TVSearch: React.FC<ShowSearchProps> = ({ onTv_showsSelected }) => {
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search for a tv_show"
+        placeholder="Search for a tv show"
         className="bg-slate-800"
       />
       <button onClick={handleSearch}>Search</button>
@@ -68,12 +54,15 @@ const TVSearch: React.FC<ShowSearchProps> = ({ onTv_showsSelected }) => {
                 minWidth: "150px",
                 textAlign: "center",
                 margin: "0 10px",
+               
               }}
+               className="hover:bg-green-900"
             >
               <img
                 src={`https://image.tmdb.org/t/p/w500${tv_show.poster_path}`}
                 alt={tv_show.name}
                 style={{ width: "100px", height: "150px" }}
+                
               />
               {tv_show.name}
             </div>
@@ -93,7 +82,12 @@ const TVSearch: React.FC<ShowSearchProps> = ({ onTv_showsSelected }) => {
           <div
             key={tv_show.id}
             onClick={() => handleDeselectTv_show(tv_show.id)}
-            style={{ minWidth: "150px", textAlign: "center", margin: "0 10px" }}
+            style={{
+              minWidth: "150px",
+              textAlign: "center",
+              margin: "0 10px",
+            }}
+            className="hover:bg-red-900"
           >
             <img
               src={`https://image.tmdb.org/t/p/w500${tv_show.poster_path}`}
@@ -104,7 +98,9 @@ const TVSearch: React.FC<ShowSearchProps> = ({ onTv_showsSelected }) => {
           </div>
         ))}
       </div>
-      <button onClick={handleSubmit}>Start Tournament</button>
+      <button onClick={() => handleSubmit(onTv_showsSelected)}>
+        Start Tournament
+      </button>
     </div>
   );
 };
