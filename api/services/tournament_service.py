@@ -8,6 +8,10 @@ def previous_power_of_2(n):
     return 1 << (n - 1).bit_length() - 1
 
 def initialize_tournament(tv_shows):
+    print("Initialising..")
+    # Reset the matchups dataframe
+    data_store.matchups_df = data_store.matchups_df .iloc[0:0]
+    # Update the tv shows dataframe
     data_store.tvs_df = pd.DataFrame(tv_shows)
     num_shows = len(data_store.tvs_df)
     previous_power = previous_power_of_2(num_shows)
@@ -46,6 +50,7 @@ def check_and_create_next_round(current_round):
     matchups = data_store.matchups_df[data_store.matchups_df['round_number'] == current_round]
     if matchups['winner_id'].notna().all():
         next_round_participants = matchups['winner_id'].tolist()
+        print(next_round_participants)
         if len(next_round_participants) == 1:
             set_final_winner(next_round_participants[0])
             return

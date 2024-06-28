@@ -25,7 +25,6 @@ def initialize():
         return jsonify({"error": "No TV shows found"}), 404
 
     initialize_tournament(tv_shows)
-    print(data_store.matchups_df)
     return jsonify(data_store.matchups_df.to_dict()), 201
 
 
@@ -79,7 +78,5 @@ def set_winner_endpoint():
         return jsonify({"error": "matchup_id and winner_id must be provided"}), 400
 
     set_winner(matchup_id, winner_id)
-    current_round = data_store.matchups_df.loc[data_store.matchups_df['match_id'] == matchup_id, 'round_number'].iloc[0]
-    check_and_create_next_round(current_round)
 
     return jsonify({"message": "Winner updated"},200)
