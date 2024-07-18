@@ -9,18 +9,31 @@ tournament_bp = Blueprint('tournament', __name__)
 
 @tournament_bp.route('/tournament/initialise', methods=['POST'])
 def initialize():
-    trending_tv_shows = fetch_trending_tv_shows()
-    if not trending_tv_shows:
-        return jsonify({"error": "Failed to fetch trending TV shows"}), 500
 
-    tv_shows = [
+    content = request.get_json()
+    if content:
+        
+        print("TVSHOWS FOUND",len(content.get("shows")))
+        tv_shows = [
         {
             'name': show['name'],
             'show_id': show['id'],
             'poster_path': show['poster_path']
-        } for show in trending_tv_shows.get('results', []) if 'name' in show
-    ]
+        } for show in content.get("shows",[]) if 'name' in show
+        ]
+    else:
+        trending_tv_shows = fetch_trending_tv_shows()
+        if not trending_tv_shows:
+            return jsonify({"error": "Failed to fetch trending TV shows"}), 500
 
+        tv_shows = [
+            {
+               'name': show['name'],
+                'show_id': show['id'],
+                'poster_path': show['poster_path']
+            } for show in trending_tv_shows.get('results', []) if 'name' in show
+        ]
+    
     if not tv_shows:
         return jsonify({"error": "No TV shows found"}), 404
 

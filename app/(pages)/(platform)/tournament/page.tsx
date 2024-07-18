@@ -6,6 +6,7 @@ import Loading from "@/app/components/loading";
 import MovieSearch from "./choose_tv_shows";
 import TVSearch from "./choose_tv_shows";
 
+
 export default function Home() {
   const {
     matchups,
@@ -15,11 +16,13 @@ export default function Home() {
     handleWinnerSelect,
     currentMatchup,
     loading,
+    initialiseSelectedTVShows
   } = useMatchups();
 
-  const search = true;
+  const search = matchups.length < 1;
+  console.log(matchups.length)
   if (search) {
-    return <TVSearch onTv_showsSelected={(query) => {console.warn(query)}}></TVSearch>;
+    return <TVSearch onTv_showsSelected={initialiseSelectedTVShows}></TVSearch>;
   }
 
   if (matchups.length === 0) {
@@ -31,7 +34,7 @@ export default function Home() {
     );
   }
 
-  if (matchups.length === 1) {
+  if (matchups.length === 1 && !matchups[0].show2_id) {
     return (
       <div className="p-4">
         <h1>Winner</h1>
@@ -60,6 +63,10 @@ export default function Home() {
       <h2>
         Round {currentRound} Matchup {currentMatchup.match_id}
       </h2>
+      {matchups.map((tv_show) => (
+        tv_show.match_id
+      ))
+          }
       <div
         className="p-4"
         style={{

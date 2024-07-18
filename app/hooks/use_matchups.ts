@@ -1,5 +1,6 @@
 // hooks/useMatchups.ts
 import { useState, useEffect } from "react";
+import { TVShow } from "../models/tv_show";
 
 interface Matchup {
   match_id: number;
@@ -27,7 +28,6 @@ const useMatchups = () => {
       },
     })
       .then((response) => {
-        response.json();
         console.log("getting the matchups");
         setCurrentRound(1);
         fetchRound(1);
@@ -108,6 +108,28 @@ const useMatchups = () => {
       });
   };
 
+  const initialiseSelectedTVShows = (tv_shows: TVShow[]) => {
+    console.log(tv_shows);
+    console.log(JSON.stringify({ "shows": tv_shows }))
+
+    // Make an HTTP POST request to the Python API
+    fetch("/api/tv/tournament/initialise", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ "shows": tv_shows }),
+    })
+      .then((response) => {
+        console.log("getting the matchups");
+        setCurrentRound(1);
+        fetchRound(1);
+      })
+      .catch((error) => {
+        console.error("Error sending data to API:", error);
+      });
+  };
+
   return {
     matchups,
     currentRound,
@@ -116,6 +138,7 @@ const useMatchups = () => {
     handleWinnerSelect,
     currentMatchup: matchups[currentMatchupIndex],
     loading,
+    initialiseSelectedTVShows,
   };
 };
 

@@ -2,10 +2,9 @@ import random
 import pandas as pd
 from data_store import data_store
 
-def previous_power_of_2(n):
-    if n <= 0:
-        return 0
-    return 1 << (n - 1).bit_length() - 1
+def round_to_nearest_power_of_2(n):
+    return 2 ** (n - 1).bit_length()
+
 
 def initialize_tournament(tv_shows):
     print("Initialising..")
@@ -14,16 +13,20 @@ def initialize_tournament(tv_shows):
     # Update the tv shows dataframe
     data_store.tvs_df = pd.DataFrame(tv_shows)
     num_shows = len(data_store.tvs_df)
-    previous_power = previous_power_of_2(num_shows)
+    previous_power = round_to_nearest_power_of_2(num_shows)
     if previous_power < num_shows:
         data_store.tvs_df = data_store.tvs_df.head(previous_power)
+    print("creathing matchups",data_store.tvs_df)
     create_matchups()
 
 def create_matchups(round_number=1):
     show_ids = data_store.tvs_df['show_id'].tolist()
+    print("makign matchup",show_ids)
     random.shuffle(show_ids)
+    
     matchups = []
     for i in range(0, len(show_ids), 2):
+        
         matchup_id = len(matchups)
         show2_id = show_ids[i + 1] if i + 1 < len(show_ids) else None
         matchups.append({

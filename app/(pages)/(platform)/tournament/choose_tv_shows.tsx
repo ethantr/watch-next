@@ -1,15 +1,11 @@
 // components/TVSearch.tsx
 import React from "react";
 import useSearchTVShows from "@/app/hooks/use_search_tv_shows";
-
-interface Show {
-  id: number;
-  name: string;
-  poster_path: string;
-}
+import useMatchups from "@/app/hooks/use_matchups";
+import { TVShow } from "@/app/models/tv_show";
 
 interface ShowSearchProps {
-  onTv_showsSelected: (tv_shows: Show[]) => void;
+  onTv_showsSelected: (tv_shows: TVShow[]) => void;
 }
 
 const TVSearch: React.FC<ShowSearchProps> = ({ onTv_showsSelected }) => {
@@ -24,6 +20,7 @@ const TVSearch: React.FC<ShowSearchProps> = ({ onTv_showsSelected }) => {
     handleDeselectTv_show,
     handleSubmit,
   } = useSearchTVShows();
+
 
   return (
     <div>
