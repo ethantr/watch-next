@@ -13,11 +13,17 @@ const useSearchTVShows = () => {
   const [selectedTv_shows, setSelectedTv_shows] = useState<Show[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const handleSearch = async () => {
+  const handleSearch = async (text: string) => {
     setLoading(true);
+    if (text.length < 1) {
+      setLoading(false);
+      setResults([]);
+      return;
+    }
     const response = await fetch(
-      `/api/tv/tournament/search_tv_show?query=${query}`
+      `/api/tv/tournament/search_tv_show?query=${text}`
     );
+
     const data = await response.json();
     setLoading(false);
     setResults(data);

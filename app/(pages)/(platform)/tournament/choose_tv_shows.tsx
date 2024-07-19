@@ -26,12 +26,12 @@ const TVSearch: React.FC<ShowSearchProps> = ({ onTv_showsSelected }) => {
         <input
           type="text"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {setQuery(e.target.value); handleSearch(e.target.value)}}
           placeholder="Search for a TV show"
           className="w-full p-2 mb-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
         />
         <button
-          onClick={handleSearch}
+          onClick={()=>handleSearch(query)}
           className="px-4 py-2 bg-indigo-600 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
         >
           Search
