@@ -20,7 +20,6 @@ export default function Home() {
   } = useMatchups();
 
   const search = matchups.length < 1;
-  console.log(matchups.length)
   if (search) {
     return <TVSearch onTv_showsSelected={initialiseSelectedTVShows}></TVSearch>;
   }
