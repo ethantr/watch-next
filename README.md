@@ -1,78 +1,46 @@
-<p align="center">
-  <a href="https://nextjs-flask-starter.vercel.app/">
-    <img src="https://assets.vercel.com/image/upload/v1588805858/repositories/vercel/logo.png" height="96">
-    <h3 align="center">Next.js Flask Starter</h3>
-  </a>
-</p>
+## Challenge
 
-<p align="center">Simple Next.js boilerplate that uses <a href="https://flask.palletsprojects.com/">Flask</a> as the API backend.</p>
+<aside>
+🔍 Users often struggle with decision fatigue due to the overwhelming number of options available across various streaming platforms.
 
-<br/>
+</aside>
 
-## Introduction
+We live in a world of "Choice overload", especially when it comes to choosing something to watch. With the vast array of streaming platforms like Netflix, Amazon Prime, Binge, Apple TV…the list goes on…we are flooded with an overwhelming number of movies and TV shows to watch..
 
-This is a hybrid Next.js + Python app that uses Next.js as the frontend and Flask as the API backend. One great use case of this is to write Next.js apps that use Python AI libraries on the backend.
+Consider a usual scenario where you're browsing Netflix with your friends, aiming to select a movie for the evening.  Each person might have different preferences - some might prefer a chilling thriller, others a light-hearted comedy, or a thought-provoking documentary. Some might want to catch up on recent releases, while others are in the mood for a nostalgic classic.
 
-## How It Works
+Excessive choices often lead to endless scrolling, indecisiveness, and can make movie night a chore. This "choice overload" results in decision fatigue, causing dissatisfaction or no decision at all.
 
-The Python/Flask server is mapped into to Next.js app under `/api/`.
+When we're flooded with too many choices, it can get so overwhelming that we end up not making a decision at all. This is called **"choice paralysis"**. Even then, if we do manage to choose something from a huge list of options, we often feel less happy with our pick than if we had fewer options to choose from.
 
-This is implemented using [`next.config.js` rewrites](https://github.com/vercel/examples/blob/main/python/nextjs-flask/next.config.js) to map any request to `/api/:path*` to the Flask API, which is hosted in the `/api` folder.
+https://hbr.org/2006/06/more-isnt-always-better
 
-On localhost, the rewrite will be made to the `127.0.0.1:5328` port, which is where the Flask server is running.
+https://www.youtube.com/watch?v=_FSMLVY9vD8
 
-In production, the Flask server is hosted as [Python serverless functions](https://vercel.com/docs/concepts/functions/serverless-functions/runtimes/python) on Vercel.
+That being said, it is fantastic that we have all these options - more options usually leads to  achieving better objective outcomes. Suppose you're looking to buy a new pair of jeans. You're more likely to find what you like in a store with 50 pairs of jeans than in a small store with only 2 pairs.
 
-## Demo
+Choice is good, but choice is paralysing - so how do we overcome this challenge, even when deciding something as simple as what movie to watch next?
 
-https://nextjs-flask-starter.vercel.app/
 
-## Deploy Your Own
+## The Attempt
+This is just me experimenting with an idea - currently a tournament feature where you are given random movies side by side, and you choose one out of the two until their is a victor.
+Next.js frontend, Flask backend.
 
-You can clone & deploy it to Vercel with one click:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?demo-title=Next.js%20Flask%20Starter&demo-description=Simple%20Next.js%20boilerplate%20that%20uses%20Flask%20as%20the%20API%20backend.&demo-url=https%3A%2F%2Fnextjs-flask-starter.vercel.app%2F&demo-image=%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F795TzKM3irWu6KBCUPpPz%2F44e0c6622097b1eea9b48f732bf75d08%2FCleanShot_2023-05-23_at_12.02.15.png&project-name=Next.js%20Flask%20Starter&repository-name=nextjs-flask-starter&repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fnextjs-flask&from=vercel-examples-repo)
+### Some rough ideas i would like to make
 
-## Developing Locally
+The project is an innovative movie recommendation app built on a comprehensive plan designed to create a personalized and engaging user experience. The app will feature a swipe-based selection system, a mood-based quiz, a movie randomizer with filters, a personality-based matching system, and a movie battle feature.
 
-You can clone & create this repo with the following command
+The swipe feature allows users to swipe right for movies they are interested in and left for those they aren't, similar to the Tinder carousel. To further personalize the experience, the app will use an algorithm that adjusts recommendations based on the user's swipes, gradually refining the suggestions to better match their tastes.
 
-```bash
-npx create-next-app nextjs-flask --example "https://github.com/vercel/examples/tree/main/python/nextjs-flask"
-```
+The mood-based quiz feature will ask a set of questions to understand the user's current mood, genre preferences, and viewing context. The quiz results will recommend a list of movies that best match the user's mood and preferences.
 
-## Getting Started
+The movie randomizer feature will allow users to set filters for genre, year, duration, and language. A fun, animated "spin the wheel" feature will then randomly select a movie from the filtered list.
 
-First, install the dependencies:
+The personality-based matching feature will start with a personality quiz for new users. The app will use an algorithm to match movies to users' personalities and previously watched movies. Users can retake the quiz periodically to keep their preferences up-to-date.
 
-```bash
-npm install
-# or
-yarn
-# or
-pnpm install
-```
+The movie battle feature will present two movie options side by side and let users pick their favorite. The process will continue with elimination rounds until a single movie is left. A leaderboard will display the most frequently picked movies to suggest trending choices.
 
-Then, run the development server:
+The development plan for the app is divided into three phases: The first phase focuses on developing the core features and building the basic user interface. The second phase involves implementing additional functionalities like the randomizer with filters, personality-based matching algorithm, and movie battles. The final phase will refine the user interface based on initial feedback, conduct beta testing, and optimize the app for performance and scalability.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-The Flask server will be running on [http://127.0.0.1:5328](http://127.0.0.1:5328) – feel free to change the port in `package.json` (you'll also need to update it in `next.config.js`).
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [Flask Documentation](https://flask.palletsprojects.com/en/1.1.x/) - learn about Flask features and API.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+By following this comprehensive plan, the app aims to offer a unique and engaging way for users to discover and select movies.
