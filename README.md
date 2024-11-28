@@ -22,25 +22,29 @@ That being said, it is fantastic that we have all these options - more options u
 Choice is good, but choice is paralysing - so how do we overcome this challenge, even when deciding something as simple as what movie to watch next?
 
 
-## The Attempt
-This is just me experimenting with an idea - currently a tournament feature where you are given random movies side by side, and you choose one out of the two until their is a victor.
-Next.js frontend, Flask backend.
+## The App (or the intended app)
+The app is an work in progress project focused on simplifying movie selection with features like mood-based quizzes, swipe-based recommendations, and collaborative tools. It’s designed to make finding movies more enjoyable and collaborative. Currently, it includes a tournament-style feature where users select between random movie pairs until a final "winner" is chosen. Built with a Next.js frontend and Flask backend.
 
 
 ### Some rough ideas i would like to make
 
-The project is an innovative movie recommendation app built on a comprehensive plan designed to create a personalized and engaging user experience. The app will feature a swipe-based selection system, a mood-based quiz, a movie randomizer with filters, a personality-based matching system, and a movie battle feature.
+    Swipe-Based Selection:
+        Users swipe right for liked movies and left for disliked ones.
+        Algorithm refines recommendations based on swipes.
 
-The swipe feature allows users to swipe right for movies they are interested in and left for those they aren't, similar to the Tinder carousel. To further personalize the experience, the app will use an algorithm that adjusts recommendations based on the user's swipes, gradually refining the suggestions to better match their tastes.
+    Mood-Based Quiz:
+        Interactive quiz assesses mood, genre preferences, and viewing context.
+        Generates movie recommendations tailored to the user's mood.
 
-The mood-based quiz feature will ask a set of questions to understand the user's current mood, genre preferences, and viewing context. The quiz results will recommend a list of movies that best match the user's mood and preferences.
+    Movie Randomizer:
+        Filters for genre, year, duration, and language.
+        Animated "spin the wheel" selects a movie randomly.
 
-The movie randomizer feature will allow users to set filters for genre, year, duration, and language. A fun, animated "spin the wheel" feature will then randomly select a movie from the filtered list.
+    Personality-Based Matching:
+        Users take a personality quiz to match movies to their tastes and watched history.
+        Allows periodic retakes to refine preferences.
 
-The personality-based matching feature will start with a personality quiz for new users. The app will use an algorithm to match movies to users' personalities and previously watched movies. Users can retake the quiz periodically to keep their preferences up-to-date.
-
-The movie battle feature will present two movie options side by side and let users pick their favorite. The process will continue with elimination rounds until a single movie is left. A leaderboard will display the most frequently picked movies to suggest trending choices.
-
-The development plan for the app is divided into three phases: The first phase focuses on developing the core features and building the basic user interface. The second phase involves implementing additional functionalities like the randomizer with filters, personality-based matching algorithm, and movie battles. The final phase will refine the user interface based on initial feedback, conduct beta testing, and optimize the app for performance and scalability.
-
-By following this comprehensive plan, the app aims to offer a unique and engaging way for users to discover and select movies.
+    Movie Battle:
+        Side-by-side comparisons let users pick their favourite.
+        Eliminates choices until one movie remains.
+        Leaderboard highlights trending and frequently picked movies.
